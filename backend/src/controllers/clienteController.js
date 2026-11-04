@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Cliente from '../models/cliente.js'
 import Sesion from '../models/sesion.js'
 import bcrypt from 'bcrypt';
@@ -16,12 +17,12 @@ export const loginCliente = async (req, res) => {
             return res.status(401).json({ mensaje: 'credenciales invalidas' })
         }
         const accessToken = jwt.sign(
-            { id: cliente.id, tipo: 'cliente' },
+            { id: cliente.id, tipo: 'client' },
             process.env.JWT_SECRET_CLIENT,
             { expiresIn: '15m' }
         )
         const refreshToken = jwt.sign(
-            { id: cliente.id, tipo: 'cliente' },
+            { id: cliente.id, tipo: 'client' },
             process.env.JWT_REFRESH_SECRET,
             { expiresIn: '7d' }
         )
@@ -62,89 +63,3 @@ export const getPerfilCliente = async (req, res) => {
     }
 }
 
-export const refreshToken = async (req, res) => {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
-        return res.status(400).json({
-            mensaje: 'Refresh token requerido'
-        });
-    }
-    try {
-        const sesion = await Sesion.findOne({
-            where: {
-                refreshToken: refreshToken
-            }
-        });
-        if (!sesion) {
-            return res.status(401).json({
-                mensaje: 'Refresh token inválido'
-            });
-        }
-        const decoded = jwt.verify(
-            refreshToken,
-            process.env.JWT_REFRESH_SECRET
-        );
-        let secret;
-        if (sesion.userType === 'client') {
-            secret = process.env.JWT_SECRET_CLIENT;
-        } else if(sesion.userType === 'admin'){
-            secret = process.env.JWT_SECRET_ADMIN;
-        }else{
-            return res.status(400).json({
-                mensaje: 'Tipo de usuario invalido'
-            })
-        }
-        const accessToken = jwt.sign(
-            {
-                id: decoded.id,
-                tipo: decoded.tipo,
-                ...(decoded.tipo === 'admin' && {
-                    role: decoded.role,
-                })
-            },
-            secret,
-            { expiresIn: '15m' }
-        );
-        return res.status(200).json({ accessToken });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            mensaje: 'Refresh token inválido o expirado',
-            error: error.message,
-        })
-    }
-
-}
-
-export const logout = async (req, res) => {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
-        return res.status(400).json({
-            mensaje: 'refresh token no encontrado'
-        });
-    }
-    try {
-        const sesion = await Sesion.findOne({
-            where: {
-                refreshToken: refreshToken
-            }
-        });
-        if (!sesion) {
-            return res.status(404).json({
-                mensaje: 'refresh token no encontrado'
-            });
-        }
-        sesion.destroy();
-        return res.status(200).json({
-            mensaje: 'Sesión cerrada correctamente'
-        });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            mensaje: 'Error interno del servidor',
-            error: error.message,
-        });
-
-    }
-
-}

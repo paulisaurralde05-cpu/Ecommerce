@@ -6,7 +6,9 @@ const LoginCliente = () => {
     const { loginClient, loginError } = useContext(AuthContext)
 
     return (
-        <div>
+        <div className='login'>
+            <h2>Inicio de sesión</h2>
+
             <input
                 type="email"
                 value={email}

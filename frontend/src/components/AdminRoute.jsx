@@ -1,16 +1,22 @@
+
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
 function AdminRoute({ children }) {
-    const { adminAccessToken } = useContext(AuthContext);
+    const { adminAccessToken, isLoading } = useContext(AuthContext);
 
-     console.log("AdminRoute:", { adminAccessToken });
+    // Esperar a que AuthProvider termine de recuperar la sesión
+    if (isLoading) {
+        return <div>Cargando sesión...</div>;
+    }
+
+    // Si no existe una sesión de administrador
     if (!adminAccessToken) {
-        return <Navigate to="/" replace />
+        return <Navigate to="/" replace />;
     }
 
     return children;
 }
 
-export default AdminRoute
+export default AdminRoute;

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Admin from '../models/admin.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -64,35 +65,4 @@ export const createProductos = async (req, res) => {
 export const obtenerReportes = async (req, res) => {
     return res.status(200).json({ message: 'reportes' });
 }
-// export const logoutAdmin = async (req, res) => {
 
-//     const { refreshToken } = req.body;
-//     if (!refreshToken) {
-//         return res.status(400).json({
-//             mensaje: 'refresh token no encontrado'
-//         });
-//     }
-//     try {
-//         const sesion = await Sesion.findOne({
-//             where:{
-//                 refreshToken: refreshToken
-//             }
-//         });
-//         if (!sesion){
-//             return res.status(400).json({
-//                 mensaje: 'refresh token no encontrado'
-//             });
-//         }
-
-//         await sesion.destroy();
-//         return res.status(200).json({
-//             mensaje: 'Sesión cerrada correctamente'
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({
-//             mensaje: 'Error interno del servidor',
-//             error: error.message,
-//         })
-//     }
-// }

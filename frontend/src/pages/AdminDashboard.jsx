@@ -7,13 +7,13 @@ import SideBar from '../components/SideBar.jsx';
 function AdminDashboard() {
   const [admin, setAdmin] = useState(null);
   const [error, setError] = useState(null);
-  const { logoutAdmin } = useContext(AuthContext);
+  const { logoutAdmin, adminAccessToken } = useContext(AuthContext);
 
   console.log("Admin:", admin);
   useEffect(() => {
     const fetchPerfil = async () => {
       try {
-        const response = await getMetricas('admin');
+        const response = await getMetricas('admin', adminAccessToken);
         setAdmin(response.data);
       } catch (e) {
         setError(`Error: ${e.message}`)

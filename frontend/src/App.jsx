@@ -12,57 +12,61 @@ import Usuarios from './adminPages/Usuarios.jsx';
 import Productos from './adminPages/Productos.jsx';
 import Reportes from './adminPages/Reportes.jsx';
 
+import Header from './components/Header.jsx';
 
 function App() {
 
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/admin/login' element={<LoginAdmin />} />
-      <Route path='/login' element={<LoginCliente />} />
-      <Route path='/client/dashboard'
-        element={
-          <ClienteRoute>
-            <ClientDashboard />
-          </ClienteRoute>
-        }
-      />
-      <Route path='/admin/dashboard'
-        element={
+    <>
+      <Header />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/admin/login' element={<LoginAdmin />} />
+        <Route path='/login' element={<LoginCliente />} />
+        <Route path='/client/dashboard'
+          element={
+            <ClienteRoute>
+              <ClientDashboard />
+            </ClienteRoute>
+          }
+        />
+        <Route path='/admin/dashboard'
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route path='/admin/usuarios' element={
           <AdminRoute>
-            <AdminDashboard />
+            <AdminRoleGuard allowedRoles={["superadmin"]}>
+              <Usuarios />
+            </AdminRoleGuard>
           </AdminRoute>
-        }
-      />
+        } />
 
-      <Route path='/admin/usuarios' element={
-        <AdminRoute>
-          <AdminRoleGuard allowedRoles={["superadmin"]}>
-            <Usuarios />
-          </AdminRoleGuard>
-        </AdminRoute>
-      } />
+        <Route path='/admin/productos' element={
+          <AdminRoute>
+            <AdminRoleGuard allowedRoles={["superadmin", "gestor_productos"]}>
+              <Productos />
+            </AdminRoleGuard>
+          </AdminRoute>
+        } />
 
-      <Route path='/admin/productos' element={
-        <AdminRoute>
-          <AdminRoleGuard allowedRoles={["superadmin", "gestor_productos"]}>
-            <Productos />
-          </AdminRoleGuard>
-        </AdminRoute>
-      } />
-
-      <Route path='/admin/reportes' element={
-        <AdminRoute>
-          <AdminRoleGuard allowedRoles={["superadmin", "auditor"]}>
-            <Reportes />
-          </AdminRoleGuard>
-        </AdminRoute>
-      } />
-      <Route path='/unauthorized' element={<Unauthorized />} />
+        <Route path='/admin/reportes' element={
+          <AdminRoute>
+            <AdminRoleGuard allowedRoles={["superadmin", "auditor"]}>
+              <Reportes />
+            </AdminRoleGuard>
+          </AdminRoute>
+        } />
+        <Route path='/unauthorized' element={<Unauthorized />} />
 
 
 
-    </Routes>
+      </Routes>
+    </>
   )
 }
 

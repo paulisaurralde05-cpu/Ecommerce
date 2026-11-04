@@ -9,20 +9,43 @@ export const api = axios.create({
     }
 })
 
-export const loginAdmin = (ruta, body) => api.post(`${ruta}/`, body);
+export const loginAdmin = (ruta, body) => api.post(`${ruta}/login`, body);
 export const loginCliente = (ruta, body) => api.post(`${ruta}/login`, body);
-export const getPerfil = (ruta) => {
-    const clientAccessToken = localStorage.getItem("clientAccessToken");
-    console.log("Token:", clientAccessToken);
-    return api.get(`${ruta}/perfil`, { headers: { Authorization: `Bearer ${clientAccessToken}` } });
+
+
+// AUTENTICACIÓN
+
+// Renovar Access Token
+
+export const refreshAuthToken = (refreshToken) => {
+    return api.post('auth/refresh', { refreshToken });
 }
 
-export const getMetricas = (ruta) => {
-    const adminAccessToken = localStorage.getItem("adminAccessToken");
-    console.log("Admin Access Token:", adminAccessToken);
-    return api.get(`${ruta}/metricas`, { headers: { Authorization: `Bearer ${adminAccessToken}` } });
+// cerrar sesion en el backend
+export const logoutAuth = (refreshToken) => {
+    return api.post('auth/logout', { refreshToken });
 }
-export const getProducts = (params) => {
-    const token = localStorage.getItem("ac");
-    return api.get(`products/`, { params, headers: { Authorization: `Bearer ${token}`} });
+
+// CLIENTE
+export const getPerfil = (ruta, token) => {
+    return api.get(`${ruta}/perfil`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+}
+
+// ADMIN
+
+
+export const getMetricas = (ruta, token) => {
+    return api.get(`${ruta}/metricas`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+}
+export const getProducts = (params, token = null) => {
+    return api.get(`products/`, {
+        params,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
 }

@@ -6,7 +6,7 @@ function SideBar() {
     const role = adminUser?.role;
     return (
         <aside>
-            <h2>Panel Admin</h2>
+            <h2>Bienvenido</h2>
 
             {role === "superadmin" && (
                 <Link to="/admin/usuarios">

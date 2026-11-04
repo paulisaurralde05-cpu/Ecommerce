@@ -70,7 +70,7 @@ export const verifyClient = (req, res, next) => {
             return next(err);
         }
         try {
-            if (!req.user || req.user.tipo !== 'cliente') {
+            if (!req.user || req.user.tipo !== 'client') {
                 return res.status(403).json({
                     estado: false, mensaje: 'acceso denegado'
                 });

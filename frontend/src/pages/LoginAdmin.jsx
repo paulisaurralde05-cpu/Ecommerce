@@ -1,12 +1,34 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../components/AuthContext.jsx';
 const LoginAdmin = () => {
-    const { loginAdm, loginError } = useContext(AuthContext);
+    const {
+        loginAdm,
+        loginError,
+        clientAccessToken,
+        clientRefreshToken,
+        logoutClient,
+        isLoading
+    } = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const tieneSesionCliente = clientAccessToken || clientRefreshToken;
     return (
-        <div>
+        <div className='login'>
+            {isLoading && <p>Comprobando sesión...</p>}
+            {tieneSesionCliente && (
+                <div className="advertencia-sesion">
+                    <h2>Sesión de Cliente activa</h2>
+                    <p>
+                        Ya posee una sesión de Cliente activa.
+                        Para ingresar al panel de Administración,
+                        debe cerrar su sesión actual.
+                    </p>
+                    <button onClick={() => logoutClient(true)}>
+                        Cerrar sesión de Cliente y continuar
+                    </button>
+                </div>
+            )}
+            <h2>Inicio de sesión admin</h2>
             <input
                 type="email"
                 value={email}

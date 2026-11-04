@@ -5,12 +5,12 @@ import AuthContext from '../components/AuthContext';
 
 function ClientDashboard() {
   const [clienteUser, setclienteUser] = useState(null);
-  const { logoutClient } = useContext(AuthContext);
+  const { logoutClient, clientAccessToken } = useContext(AuthContext);
   console.log("clienteUser:", clienteUser);
   useEffect(() => {
     const fetchPerfil = async () => {
       try {
-        const response = await getPerfil('client');
+        const response = await getPerfil('client', clientAccessToken);
         setclienteUser(response.data);
         console.log(response)
       } catch (e) {
