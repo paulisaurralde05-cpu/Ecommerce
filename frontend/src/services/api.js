@@ -32,9 +32,22 @@ export const getPerfil = (ruta, token) => {
         headers: { Authorization: `Bearer ${token}` }
     });
 }
+export const getPublicProducts = (params) => {
+    return api.get(`products/`, {
+        params
+    });
+}
 
 // ADMIN
 
+export const getUsuarios = (token) => {
+
+    return api.get('admin/usuarios', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
 
 export const getMetricas = (ruta, token) => {
     return api.get(`${ruta}/metricas`, {
@@ -44,6 +57,27 @@ export const getMetricas = (ruta, token) => {
 export const getProducts = (params, token = null) => {
     return api.get(`products/`, {
         params,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+export const createProduct = (body, token) => {
+    return api.post(`products/`, body, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+export const editProduct = (id, body, token) => {
+    return api.put(`products/${id}`, body, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+export const deleteProduct = (id, token) => {
+    return api.delete(`products/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }

@@ -11,7 +11,6 @@ import Unauthorized from './pages/Unauthorized.jsx';
 import Usuarios from './adminPages/Usuarios.jsx';
 import Productos from './adminPages/Productos.jsx';
 import Reportes from './adminPages/Reportes.jsx';
-
 import Header from './components/Header.jsx';
 
 function App() {

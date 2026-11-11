@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+
+import { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 import AuthContext from './AuthContext.jsx'
 import ThemeContext from './ThemeContext.jsx'
-
 
 const Header = () => {
     const {
@@ -17,104 +17,182 @@ const Header = () => {
 
     const { theme, toggleTheme } = useContext(ThemeContext);
 
-    const esCliente = !!clientAccessToken
-    const esAdmin = !!adminAccessToken
+    const [menuAbierto, setMenuAbierto] = useState(false);
+
+    const esCliente = !!clientAccessToken;
+    const esAdmin = !!adminAccessToken;
 
     const rolAdmin = adminUser?.role;
 
+    const cerrarMenu = () => {
+        setMenuAbierto(false);
+    };
+
     return (
-        <header className={`header ${theme}`}>
+        <header className="w-full bg-white text-[#29241F] border-b border-[#E7E0D6] dark:bg-[#24211E] dark:text-white dark:border-[#44403C]">
 
-            <div className="header-logo">
-                <Link to="/">
-                    Mi Ecommerce
+            {/* Barra principal */}
+            <div className="flex items-center justify-between px-4 py-4 md:px-8">
+
+                {/* Logo */}
+                <Link
+                    to="/"
+                    onClick={cerrarMenu}
+                    className="text-xl font-semibold text-[#C8793D]"
+                >
+                    El Arpa de David
                 </Link>
-            </div>
 
-            <nav className="header-nav">
+                {/* Botón hamburguesa: solo móvil */}
+                <button
+                    onClick={() => setMenuAbierto(!menuAbierto)}
+                    className="md:hidden border border-[#E7E0D6] px-3 py-2 rounded"
+                    aria-label="Abrir menú"
+                >
+                    {menuAbierto ? '✕' : '☰'}
+                </button>
 
-                <NavLink to="/">
-                    Inicio
-                </NavLink>
+                {/* Navegación */}
+                <nav className={`${menuAbierto ? 'flex' : 'hidden'} md:flex absolute md:static top-[60px] left-0 w-full md:w-auto flex-col md:flex-row items-start md:items-center gap-4 p-5 md:p-0 bg-white dark:bg-[#24211E] border-b md:border-0 border-[#E7E0D6] dark:border-[#44403C] z-10`}>
 
-                {!isLoading && (
-                    <>
-                        {/* VISITANTE */}
-                        {!esCliente && !esAdmin && (
-                            <>
-                                <NavLink to="/login">
-                                    Iniciar sesión
-                                </NavLink>
-
-                                <NavLink to="/admin/login">
-                                    Acceso administrador
-                                </NavLink>
-                            </>
-                        )}
-
-                        {/* CLIENTE */}
-                        {esCliente && !esAdmin && (
-                            <>
-                                <NavLink to="/client/dashboard">
-                                    Mi panel
-                                </NavLink>
-
-                                <button onClick={logoutClient}>
-                                    Cerrar sesión
-                                </button>
-                            </>
-                        )}
-
-                        {/* ADMINISTRADOR */}
-                        {esAdmin && !esCliente && (
-                            <>
-                                <NavLink to="/admin/dashboard">
-                                    Panel
-                                </NavLink>
-
-                                {rolAdmin === 'superadmin' && (
-                                    <NavLink to="/admin/usuarios">
-                                        Usuarios
+                    {!isLoading && (
+                        <>
+                            {/* VISITANTE */}
+                            {!esCliente && !esAdmin && (
+                                <>
+                                    <NavLink
+                                        to="/"
+                                        onClick={cerrarMenu}
+                                        className="hover:text-[#C8793D]"
+                                    >
+                                        Inicio
                                     </NavLink>
-                                )}
 
-                                {(rolAdmin === 'superadmin' ||
-                                    rolAdmin === 'gestor_productos') && (
-                                        <NavLink to="/admin/productos">
-                                            Productos
+                                    <NavLink
+                                        to="/login"
+                                        onClick={cerrarMenu}
+                                        className="hover:text-[#C8793D]"
+                                    >
+                                        Iniciar sesión
+                                    </NavLink>
+
+                                    <NavLink
+                                        to="/admin/login"
+                                        onClick={cerrarMenu}
+                                        className="hover:text-[#C8793D]"
+                                    >
+                                        Acceso administrador
+                                    </NavLink>
+                                </>
+                            )}
+
+                            {/* CLIENTE */}
+                            {esCliente && !esAdmin && (
+                                <>
+                                    <NavLink
+                                        to="/"
+                                        onClick={cerrarMenu}
+                                        className="hover:text-[#C8793D]"
+                                    >
+                                        Inicio
+                                    </NavLink>
+                                    
+                                    <NavLink
+                                        to="/client/dashboard"
+                                        onClick={cerrarMenu}
+                                        className="hover:text-[#C8793D]"
+                                    >
+                                        Mi Perfil
+                                    </NavLink>
+
+                                    <button
+                                        onClick={() => {
+                                            cerrarMenu();
+                                            logoutClient();
+                                        }}
+                                        className="text-left hover:text-[#C8793D]"
+                                    >
+                                        Cerrar sesión
+                                    </button>
+                                </>
+                            )}
+
+                            {/* ADMINISTRADOR */}
+                            {esAdmin && !esCliente && (
+                                <>
+                                    <NavLink
+                                        to="/admin/dashboard"
+                                        onClick={cerrarMenu}
+                                        className="hover:text-[#C8793D]"
+                                    >
+                                        Panel
+                                    </NavLink>
+
+                                    {rolAdmin === 'superadmin' && (
+                                        <NavLink
+                                            to="/admin/usuarios"
+                                            onClick={cerrarMenu}
+                                            className="hover:text-[#C8793D]"
+                                        >
+                                            Usuarios
                                         </NavLink>
                                     )}
 
-                                {(rolAdmin === 'superadmin' ||
-                                    rolAdmin === 'auditor') && (
-                                        <NavLink to="/admin/reportes">
-                                            Reportes
-                                        </NavLink>
-                                    )}
+                                    {(rolAdmin === 'superadmin' ||
+                                        rolAdmin === 'gestor_productos') && (
+                                            <NavLink
+                                                to="/admin/productos"
+                                                onClick={cerrarMenu}
+                                                className="hover:text-[#C8793D]"
+                                            >
+                                                Productos
+                                            </NavLink>
+                                        )}
 
-                                <button onClick={logoutAdmin}>
-                                    Cerrar sesión
-                                </button>
-                            </>
-                        )}
+                                    {(rolAdmin === 'superadmin' ||
+                                        rolAdmin === 'auditor') && (
+                                            <NavLink
+                                                to="/admin/reportes"
+                                                onClick={cerrarMenu}
+                                                className="hover:text-[#C8793D]"
+                                            >
+                                                Reportes
+                                            </NavLink>
+                                        )}
 
-                        {/* CONFLICTO DE SESIONES */}
-                        {esCliente && esAdmin && (
-                            <span>
-                                Conflicto de sesiones
-                            </span>
-                        )}
-                    </>
-                )}
+                                    <button
+                                        onClick={() => {
+                                            cerrarMenu();
+                                            logoutAdmin();
+                                        }}
+                                        className="text-left hover:text-[#C8793D]"
+                                    >
+                                        Cerrar sesión
+                                    </button>
+                                </>
+                            )}
 
-            </nav>
+                            {/* CONFLICTO DE SESIONES */}
+                            {esCliente && esAdmin && (
+                                <span>
+                                    Conflicto de sesiones
+                                </span>
+                            )}
+                        </>
+                    )}
 
-            <button onClick={toggleTheme}>
-                {theme === 'light' ? '🌙 Modo oscuro' : '☀️ Modo claro'}
-            </button>
+                    {/* Cambiar tema */}
+                    <button
+                        onClick={toggleTheme}
+                        className="border border-[#E7E0D6] dark:border-[#57534E] px-3 py-2 rounded hover:text-[#C8793D]"
+                    >
+                        {theme === 'light' ? '🌙 Modo oscuro' : '☀️ Modo claro'}
+                    </button>
 
+                </nav>
+            </div>
         </header>
     );
 }
 
-export default Header
+export default Header;

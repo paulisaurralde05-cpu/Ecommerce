@@ -34,78 +34,79 @@ const seedCliente = {
 
 const productosSeed = [
     {
-        name: 'Procesador AMD Ryzen 3 4100',
-        price: 96500.00,
-        stock: 15,
-        category: 'Procesadores',
-    },
-    {
-        name: 'Intel Core i9-14900Kf',
-        price: 1798170.00,
-        stock: 4,
-        category: 'Procesadores',
-    },
-    {
-        name: 'Placa de Video ASUS RTX 4070 Dual 12GB',
-        price: 850000.00,
-        stock: 8,
-        category: 'Placas de video',
-    },
-    {
-        name: 'Procesador AMD Ryzen 5 5600X',
-        price: 245000.00,
-        stock: 20,
-        category: 'Procesadores',
-    },
-    {
-        name: 'Motherboard ASUS Prime B550M-A',
-        price: 135000.00,
-        stock: 12,
-        category: 'Motherboards',
-    },
-    {
-        name: 'Motherboard Gigabyte Z790 AORUS ELITE',
-        price: 410000.00,
-        stock: 6,
-        category: 'Motherboards',
-    },
-    {
-        name: 'Placa de Video AMD Radeon RX 7600 XT 16GB',
-        price: 495000.00,
+        name: 'Guitarra Acústica Yamaha F310',
+        price: 285000.00,
         stock: 10,
-        category: 'Placas de video',
+        category: 'Guitarras',
     },
     {
-        name: 'Memoria RAM DDR5 16GB Corsair Vengeance',
-        price: 89000.00,
+        name: 'Guitarra Eléctrica Fender Squier Stratocaster',
+        price: 650000.00,
+        stock: 5,
+        category: 'Guitarras',
+    },
+    {
+        name: 'Teclado Musical Casio CT-S300',
+        price: 420000.00,
+        stock: 8,
+        category: 'Teclados',
+    },
+    {
+        name: 'Piano Digital Yamaha P-45',
+        price: 1250000.00,
+        stock: 3,
+        category: 'Teclados',
+    },
+    {
+        name: 'Batería Acústica Mapex Tornado',
+        price: 890000.00,
+        stock: 4,
+        category: 'Baterías',
+    },
+    {
+        name: 'Batería Electrónica Yamaha DTX402K',
+        price: 1100000.00,
+        stock: 3,
+        category: 'Baterías',
+    },
+    {
+        name: 'Micrófono Dinámico Shure SM58',
+        price: 195000.00,
+        stock: 12,
+        category: 'Accesorios',
+    },
+    {
+        name: 'Auriculares de Estudio Audio-Technica ATH-M20x',
+        price: 145000.00,
+        stock: 15,
+        category: 'Accesorios',
+    },
+    {
+        name: 'Soporte para Guitarra Hercules',
+        price: 48000.00,
+        stock: 20,
+        category: 'Accesorios',
+    },
+    {
+        name: 'Afinador Cromático Korg CA-2',
+        price: 35000.00,
         stock: 25,
-        category: 'Memorias',
+        category: 'Accesorios',
     },
     {
-        name: 'Disco SSD NVMe M.2 1TB WD Black SN770',
-        price: 105000.00,
-        stock: 40,
-        category: 'Almacenamiento',
+        name: 'Ukelele Soprano Kala',
+        price: 135000.00,
+        stock: 7,
+        category: 'Guitarras',
     },
     {
-        name: 'Fuente Corsair RM750e 750W',
-        price: 185000.00,
-        stock: 14,
-        category: 'Fuentes',
-    },
-    {
-        name: 'Gabinete Lian Li Lancool 216 RGB',
-        price: 140000.00,
+        name: 'Pedal de Efectos Boss DS-1',
+        price: 165000.00,
         stock: 9,
-        category: 'Gabinetes',
-    },
-    {
-        name: 'Memoria RAM DDR4 32GB Kingston Fury',
-        price: 112000.00,
-        stock: 30,
-        category: 'Memorias',
+        category: 'Accesorios',
     }
 ];
+
 
 
 const runseed = async () => {

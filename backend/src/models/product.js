@@ -16,13 +16,22 @@ const Product = sequelize.define('products', {
         type: DataTypes.DECIMAL,
         allowNull: false
     },
-    stock:{
+    stock: {
         type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull: false
     },
     category: {
         type: DataTypes.STRING
-    }
+    },
+    discount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+            min: 0,
+            max: 100
+        }
+    },
 
 }, {
     timestamps: true,

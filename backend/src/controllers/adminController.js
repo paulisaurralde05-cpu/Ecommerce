@@ -57,7 +57,22 @@ export const obtenerMetricas = async (req, res) => {
     }
 }
 export const obtenerUsuarios = async (req, res) => {
-    return res.status(200).json({ message: 'usuarios' });
+    try {
+        const usuarios = await Cliente.findAll({
+            attributes: ['id', 'nombre', 'email']
+        });
+
+        res.status(200).json({
+            estado: true,
+            data: usuarios
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            estado: false,
+            mensaje: 'Error al obtener los usuarios' + error.message,
+        });
+    }
 }
 export const createProductos = async (req, res) => {
     return res.status(200).json({ message: 'productos' });

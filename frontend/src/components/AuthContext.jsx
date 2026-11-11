@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("clientAccessToken", accessToken);
             localStorage.setItem("clientRefreshToken", refreshToken);
 
-            navigate('/client/dashboard');
+            navigate('/');
         } catch (error) {
             console.error('ERROR AL INICIAR SESIÓN: ' + error.message);
             setLoginError(error.response?.data?.mensaje || error.response?.data?.message || error.response?.data?.error || error.message);
